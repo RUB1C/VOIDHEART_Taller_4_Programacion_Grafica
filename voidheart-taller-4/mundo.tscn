@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://kofhyskdpbgu"]
+
+[ext_resource type="Script" uid="uid://c3u4twpiiqet3" path="res://control_jugador.gd" id="1"]
+[ext_resource type="Script" uid="uid://caegrbtqadnhh" path="res://lector_entrada.gd" id="2"]
+[ext_resource type="Script" uid="uid://bnis8f1i0v1te" path="res://motor.gd" id="3"]
+[ext_resource type="Script" uid="uid://p1w2w2u0rxuy" path="res://orientador.gd" id="4"]
+[ext_resource type="Script" uid="uid://b70v78f8ujbl7" path="res://camara_seguidora.gd" id="5"]
+[ext_resource type="Script" uid="uid://b18pjmri7820" path="res://agarrador.gd" id="agarrador"]
+[ext_resource type="Script" uid="uid://smqop0buvtrg" path="res://empujador.gd" id="empujador"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxShape3D" id="PisoForma"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_1"]
+albedo_color = Color(0.93, 0.13, 0.24, 1)
+
+[sub_resource type="BoxShape3D" id="JugadorForma"]
+size = Vector3(1, 0.9, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_thsib"]
+
+[sub_resource type="Sky" id="Sky_hchaj"]
+sky_material = SubResource("ProceduralSkyMaterial_thsib")
+
+[sub_resource type="Environment" id="Environment_uxa2c"]
+background_mode = 2
+sky = SubResource("Sky_hchaj")
+ambient_light_source = 3
+
+[node name="Mundo" type="Node3D" unique_id=1241622084]
+
+[node name="Piso" type="MeshInstance3D" parent="." unique_id=2089339185]
+mesh = SubResource("PlaneMesh_1")
+
+[node name="PisoFisico" type="StaticBody3D" parent="." unique_id=314490040]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PisoFisico" unique_id=47496689]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("PisoForma")
+
+[node name="Sol" type="DirectionalLight3D" parent="." unique_id=691433254]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 4, 0)
+shadow_enabled = true
+
+[node name="Jugador" type="CharacterBody3D" parent="." unique_id=2015198806]
+collision_layer = 8
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1")
+mostrar_rapidez = null
+
+[node name="Modelo" type="Node3D" parent="Jugador" unique_id=1657911814]
+
+[node name="Cuerpo" type="MeshInstance3D" parent="Jugador/Modelo" unique_id=437885756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="Nariz" type="MeshInstance3D" parent="Jugador/Modelo" unique_id=1954482251]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.6)
+mesh = SubResource("BoxMesh_2")
+surface_material_override/0 = SubResource("Mat_1")
+
+[node name="Mano" type="Marker3D" parent="Jugador/Modelo" unique_id=1159628511]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+
+[node name="LectorEntrada" type="Node" parent="Jugador" unique_id=1034803329]
+script = ExtResource("2")
+
+[node name="Motor" type="Node" parent="Jugador" unique_id=1071955918]
+script = ExtResource("3")
+
+[node name="Orientador" type="Node" parent="Jugador" unique_id=1187391462 node_paths=PackedStringArray("modelo")]
+script = ExtResource("4")
+modelo = NodePath("../Modelo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Jugador" unique_id=490999626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("JugadorForma")
+
+[node name="Empujador" type="Node" parent="Jugador" unique_id=1860805463]
+script = ExtResource("empujador")
+
+[node name="Agarrador" type="Node3D" parent="Jugador" unique_id=597841026 node_paths=PackedStringArray("modelo", "mano")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("agarrador")
+modelo = NodePath("../Modelo")
+mano = NodePath("../Modelo/Mano")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1504732348 node_paths=PackedStringArray("objetivo", "motor")]
+process_priority = 10
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 5, 7)
+script = ExtResource("5")
+objetivo = NodePath("../Jugador")
+motor = NodePath("../Jugador/Motor")
+
+[node name="Reflector" type="SpotLight3D" parent="." unique_id=1748495762]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 4, -1)
+light_color = Color(0.4627451, 0.59607846, 1, 1)
+spot_range = 8.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=729412638]
+environment = SubResource("Environment_uxa2c")
