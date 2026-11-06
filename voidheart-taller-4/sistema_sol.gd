@@ -1,7 +1,6 @@
 class_name SistemaSol
 extends Node
 
-# Señal para avisar el cambio de ciclo a otras luces (Nivel 2)
 signal cambio_noche(es_noche: bool)
 
 @export var sol: DirectionalLight3D
@@ -18,10 +17,6 @@ var era_noche := false
 func _ready() -> void:
 	aplicar_hora()
 	era_noche = CicloDia.factor_sol(ciclo.hora) <= 0.0
-	
-	cambio_noche.connect(func(n: bool) -> void:
-		print("noche: ", n, " a las ", snappedf(ciclo.hora, 0.1))
-	)
 
 func _process(delta: float) -> void:
 	ciclo.avanzar(delta)
@@ -41,3 +36,14 @@ func aplicar_hora() -> void:
 	sol.light_color = CicloDia.color_sol(h)
 	
 	entorno.environment.ambient_light_energy = lerpf(ambiente_noche, ambiente_dia, f)
+
+
+static func lambert(normal: Vector3, direccion_luz: Vector3) -> float:
+	return maxf(0.0, normal.dot(direccion_luz))
+
+func prediccion_piso(h: float) -> float:
+	var f := CicloDia.factor_sol(h)
+	var e := energia_sol * f
+	var angulo := deg_to_rad(CicloDia.elevacion(h))
+	var l := Vector3(0.0, sin(angulo), 0.0).normalized()
+	return lambert(Vector3.UP, l) * e * CicloDia.color_sol(h).r

@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://b70v78f8ujbl7" path="res://camara_seguidora.gd" id="5"]
 [ext_resource type="Script" uid="uid://dfffy16a2ldl8" path="res://sistema_sol.gd" id="8_tm4ya"]
 [ext_resource type="Script" uid="uid://cjdy6nwskk0r0" path="res://ciclo_dia.gd" id="9_v08mv"]
+[ext_resource type="Script" uid="uid://bxuu62vys3xmc" path="res://fotometro.gd" id="10_v08mv"]
 [ext_resource type="Script" uid="uid://b18pjmri7820" path="res://agarrador.gd" id="agarrador"]
 [ext_resource type="Script" uid="uid://smqop0buvtrg" path="res://empujador.gd" id="empujador"]
 
@@ -116,3 +117,7 @@ entorno = NodePath("../WorldEnvironment")
 [node name="CicloDia" type="Node" parent="SistemaSol" unique_id=5584552]
 script = ExtResource("9_v08mv")
 duracion_dia = 12.0
+
+[node name="Fotometro" type="Node" parent="." unique_id=314817307 node_paths=PackedStringArray("sol_sistema")]
+script = ExtResource("10_v08mv")
+sol_sistema = NodePath("../SistemaSol")
