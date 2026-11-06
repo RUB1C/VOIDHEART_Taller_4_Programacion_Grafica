@@ -10,9 +10,13 @@ config_version=5
 
 [application]
 
-config/name="VOIDHEART_Taller_4"
-run/main_scene="res://mundo.tscn"
+config/name="VOIDHEART"
+run/main_scene="res://zona_a.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[dotnet]
+
+project/assembly_name="Taller 4 - Inicio (solucion Taller 3)"
 
 [rendering]
 
