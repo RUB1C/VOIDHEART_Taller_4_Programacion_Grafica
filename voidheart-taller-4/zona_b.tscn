@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://b70v78f8ujbl7" path="res://camara_seguidora.gd" id="7_61dqb"]
 [ext_resource type="Script" uid="uid://bk8lmx72it68g" path="res://luz_parpadeante.gd" id="8_n70iv"]
 [ext_resource type="Script" uid="uid://t6m7kr00dl0x" path="res://disparador.gd" id="9_r8jko"]
+[ext_resource type="Script" uid="uid://daowhquyvisv8" path="res://sistema_eventos.gd" id="10_ltugl"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dpv7s"]
 size = Vector2(20, 20)
@@ -41,7 +42,7 @@ ambient_light_color = Color(0.08235294, 0.08235294, 0.08235294, 1)
 tonemap_mode = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5h11f"]
-size = Vector3(3.7807617, 2.3546143, 2.9970703)
+size = Vector3(9.522705, 1.9590454, 3.1473389)
 
 [node name="ZonaB" type="Node3D" unique_id=42435576]
 
@@ -120,11 +121,19 @@ omni_attenuation = 2.0
 script = ExtResource("8_n70iv")
 
 [node name="Disparador" type="Area3D" parent="." unique_id=338579050]
-collision_layer = 8
-collision_mask = 3
+collision_layer = 0
+collision_mask = 8
 script = ExtResource("9_r8jko")
 tecla = 81
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Disparador" unique_id=1664909620]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3769112, 0.6773071, -2.5926943)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4309883, 0.87509155, -6.1188498)
 shape = SubResource("BoxShape3D_5h11f")
+
+[node name="SistemaEventos" type="Node" parent="." unique_id=435036104 node_paths=PackedStringArray("luz_evento", "luz_variable")]
+script = ExtResource("10_ltugl")
+luz_evento = NodePath("../LuzEvento")
+luz_variable = NodePath("../LuzParpadeante")
+
+[node name="LuzEvento" type="OmniLight3D" parent="." unique_id=1513469643]
+light_color = Color(0.13725491, 0.06666667, 0.13725491, 1)
