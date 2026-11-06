@@ -1,4 +1,6 @@
+OmniLight3D
 Node
+CollisionShape3D
+Area3D
 WorldEnvironment
 SpotLight3D
-OmniLight3D

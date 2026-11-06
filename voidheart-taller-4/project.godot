@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="VOIDHEART"
-run/main_scene="res://zona_a.tscn"
+run/main_scene="uid://btdc4rlm8ip3w"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [dotnet]
