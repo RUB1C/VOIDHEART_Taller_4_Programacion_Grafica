@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://smqop0buvtrg" path="res://empujador.gd" id="5_eyatn"]
 [ext_resource type="Script" uid="uid://b18pjmri7820" path="res://agarrador.gd" id="6_r0ps7"]
 [ext_resource type="Script" uid="uid://b70v78f8ujbl7" path="res://camara_seguidora.gd" id="7_61dqb"]
+[ext_resource type="Script" uid="uid://bk8lmx72it68g" path="res://luz_parpadeante.gd" id="8_n70iv"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dpv7s"]
 size = Vector2(20, 20)
@@ -105,3 +106,10 @@ motor = NodePath("../Jugador/Motor")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=702161145]
 environment = SubResource("Environment_s3cy1")
+
+[node name="LuzParpadeante" type="OmniLight3D" parent="." unique_id=1084325700]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.520777, 1.320154, -3.2971816)
+light_color = Color(0.23627248, 0.42131323, 1, 1)
+light_energy = 3.0
+omni_attenuation = 2.0
+script = ExtResource("8_n70iv")
